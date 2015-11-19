@@ -1,0 +1,86 @@
+{
+  "flagExternal": true,
+  "type": {
+    "code": "string",
+    "label": "string"
+  },
+  "subType": {
+    "code": "string",
+    "label": "string"
+  },
+  "productIdentification": "string",
+  "customerDescription": "string",
+  "bankId": "string",
+  "status": {
+    "code": "string",
+    "label": "string"
+  },
+  "closingDate": {
+    "datetime": "string"
+  },
+  "referringAddress": {
+    "id": "string",
+    "createDate": {
+      "datetime": "string"
+    },
+    "bankId": "string",
+    "addressType": {
+      "code": "string",
+      "label": "string"
+    },
+    "preferred": true,
+    "street": "string",
+    "city": "string",
+    "zip": "string",
+    "county": "string",
+    "nation": {
+      "code": "string",
+      "label": "string"
+    }
+  },
+  "currency": {
+    "code": "string",
+    "label": "string"
+  },
+  "owners": {
+    "list": [
+      {
+        "identificationInBank": "string",
+        "id": "string",
+        "href": "string",
+        "referenceCreateDate": {
+          "datetime": "string"
+        },
+        "subjectType": {
+          "code": "string",
+          "label": "string"
+        },
+        "name": "string",
+        "roleType": {
+          "code": "string",
+          "label": "string"
+        }
+      }
+    ]
+  },
+  "identificationInBank": "string",
+  "id": "string",
+  "createDate": {
+    "datetime": "string"
+  },
+  "availableBalance": {
+    "value": 0,
+    "currency": {
+      "code": "string",
+      "label": "string"
+    }
+  },
+  "accountingBalance": {
+    "value": 0,
+    "currency": {
+      "code": "string",
+      "label": "string"
+    }
+  },
+  "iban": "string"
+}

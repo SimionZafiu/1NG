@@ -1,0 +1,18 @@
+Thu Nov 19 22:13:35 CET 2015
+<Unknown> [warning] Found @DeclareAnnotation while current release does not support it (see 'org.aspectj.weaver.bcel.AtAjAttributes')
+	
+com/ing/ing1/http/INGApiClient.java:24 [warning] can not implement lazyTjp on this joinpoint method-execution(com.ing.ing1.dto.ServerStatus com.ing.ing1.http.INGApiClient.getServerStatus()) because around advice is used [Xlint:canNotImplementLazyTjp]
+	
+	see also: /home/ggkekas/workspace/hackathlon/1NG/engine/target/classes!com/ing/ing1/exception/ExceptionHandlingAspect.class::0
+Join point 'method-execution(com.ing.ing1.dto.ServerStatus com.ing.ing1.http.INGApiClient.getServerStatus())' in Type 'com.ing.ing1.http.INGApiClient' (INGApiClient.java:24) advised by around advice from 'com.ing.ing1.exception.ExceptionHandlingAspect' (ExceptionHandlingAspect.class(from ExceptionHandlingAspect.java))
+	
+com/ing/ing1/http/INGApiClient.java:28 [warning] can not implement lazyTjp on this joinpoint method-execution(com.ing.ing1.dto.ProdFeatures com.ing.ing1.http.INGApiClient.getProducts(java.lang.String)) because around advice is used [Xlint:canNotImplementLazyTjp]
+	
+	see also: /home/ggkekas/workspace/hackathlon/1NG/engine/target/classes!com/ing/ing1/exception/ExceptionHandlingAspect.class::0
+Join point 'method-execution(com.ing.ing1.dto.ProdFeatures com.ing.ing1.http.INGApiClient.getProducts(java.lang.String))' in Type 'com.ing.ing1.http.INGApiClient' (INGApiClient.java:28) advised by around advice from 'com.ing.ing1.exception.ExceptionHandlingAspect' (ExceptionHandlingAspect.class(from ExceptionHandlingAspect.java))
+	
+com/ing/ing1/http/INGApiClient.java:32 [warning] can not implement lazyTjp on this joinpoint method-execution(com.ing.ing1.dto.Account com.ing.ing1.http.INGApiClient.getAccount(java.lang.String)) because around advice is used [Xlint:canNotImplementLazyTjp]
+	
+	see also: /home/ggkekas/workspace/hackathlon/1NG/engine/target/classes!com/ing/ing1/exception/ExceptionHandlingAspect.class::0
+Join point 'method-execution(com.ing.ing1.dto.Account com.ing.ing1.http.INGApiClient.getAccount(java.lang.String))' in Type 'com.ing.ing1.http.INGApiClient' (INGApiClient.java:32) advised by around advice from 'com.ing.ing1.exception.ExceptionHandlingAspect' (ExceptionHandlingAspect.class(from ExceptionHandlingAspect.java))
+	

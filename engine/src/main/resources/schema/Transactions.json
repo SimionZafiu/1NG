@@ -1,0 +1,59 @@
+{
+  "list": [
+    {
+      "id": "string",
+      "createDate": {
+        "datetime": "string"
+      },
+      "productId": "string",
+      "productIdentification": "string",
+      "transactionType": {
+        "code": "string",
+        "label": "string"
+      },
+      "transactionSubType": {
+        "code": "string",
+        "label": "string"
+      },
+      "direction": {
+        "code": "string",
+        "label": "string"
+      },
+      "counterpartProductId": "string",
+      "counterpartProductIdentification": "string",
+      "description": "string",
+      "currency": {
+        "code": "string",
+        "label": "string"
+      },
+      "amount": {
+        "value": 0,
+        "currency": {
+          "code": "string",
+          "label": "string"
+        }
+      },
+      "commission": {
+        "value": 0,
+        "currency": {
+          "code": "string",
+          "label": "string"
+        }
+      },
+      "effectiveDate": {
+        "datetime": "string"
+      },
+      "accountingDate": {
+        "datetime": "string"
+      },
+      "transferId": "string",
+      "balanceAfterTransaction": {
+        "value": 0,
+        "currency": {
+          "code": "string",
+          "label": "string"
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "service": "string",
+  "description": "string",
+  "serviceImplemented": "string",
+  "entryPointList": {
+    "list": [
+      {
+        "entryPoint": "string",
+        "description": "string",
+        "implemented": "string"
+      }
+    ]
+  }
+}

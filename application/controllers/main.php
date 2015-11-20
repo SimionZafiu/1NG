@@ -5,7 +5,7 @@ class Main extends CI_Controller {
 	public function index()
 	{
 		
-		$this->load->view("main_view");
+		$this->load->view("dashboard_view");
 	}
 
 	public function test()

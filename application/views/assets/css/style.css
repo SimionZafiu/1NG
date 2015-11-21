@@ -468,6 +468,13 @@ p.balance {
 	border-radius:100%;
 	background:#87b462;
 	font-size:14px;
+	text-align:center;
+}
+
+.row1col2.words {
+
+	margin-top:20px;
+
 }
 
 .row2col1 {

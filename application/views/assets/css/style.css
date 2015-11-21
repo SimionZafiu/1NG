@@ -467,12 +467,11 @@ p.balance {
 	height:100px!important;
 	border-radius:100%;
 	background:#87b462;
+	font-size:14px;
 }
 
-.
-
 .row2col1 {
-	background:green;
+	background:#f1be28;
 	height:200px!important;
 	width:200px!important;
 	border-radius:100%;
@@ -484,8 +483,18 @@ p.balance {
 	text-align:center;
 }
 
-.row2col2{
+.halfof {
 	background:yellow;
+	border-radius:100%;
+	width:150px!important;
+	height:150px!important;
+	text-align:center;
+	
+}
+
+.halfof img {
+	margin-top:22px;
+	width:95px;
 }
 
 a.logo {

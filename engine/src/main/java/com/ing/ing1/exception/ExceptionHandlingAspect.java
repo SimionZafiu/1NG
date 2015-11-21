@@ -28,7 +28,7 @@ public class ExceptionHandlingAspect {
             if(ApplicationFactory.getConfiguration().isDebug()) {
                 LOGGER.error("Error while trying to call " + pjp.getSignature().getName(), e);
             } else {
-                LOGGER.error("Error while trying to call " + pjp.getSignature().getName() + "Error: " + e.getMessage());
+                LOGGER.error("Error while trying to call " + pjp.getSignature().getName() + ". Error: " + e.getMessage());
             }
         } finally {
             // stop stopwatch

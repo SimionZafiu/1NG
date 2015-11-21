@@ -1,0 +1,24 @@
+{
+  "id": "1",
+  "name": "Umit",
+  "type": "high",
+  "amount": "3500",
+  "goals": [
+    {
+      "id": 500,
+      "type": "car",
+      "customerId": "300",
+      "targetAmount": "0",
+      "startDate": "2015-11-20",
+      "endDate": "2016-11-20"
+    },
+    {
+      "id": 501,
+      "type": "pension",
+      "customerId": "30000",
+      "targetAmount": "0",
+      "startDate": "2015-11-20",
+      "endDate": "2029-11-20"
+    }
+  ]
+}

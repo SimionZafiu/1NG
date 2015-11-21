@@ -34,12 +34,12 @@ public class Goal {
         this.id = id;
     }
 
-    public GoalType getType() {
+    public GoalType getGoalType() {
         return type;
     }
 
-    public void setType(GoalType type) {
-        this.type = type;
+    public void setGoalType(String type) {
+        this.type = GoalType.valueOf(type.toUpperCase());
     }
 
     public int getCustomerId() {

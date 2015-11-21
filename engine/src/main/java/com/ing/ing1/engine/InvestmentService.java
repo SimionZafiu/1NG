@@ -49,7 +49,7 @@ public class InvestmentService {
     }
 
     private ContractedProduct getCustomerSavingsAccount(Customer customer) {
-        Optional<Goal> savingsAccountGoal = customer.getGoals().stream().filter(g -> g.getType() == GoalType.SAVINGS).findFirst();
+        Optional<Goal> savingsAccountGoal = customer.getGoals().stream().filter(g -> g.getGoalType() == GoalType.SAVINGS).findFirst();
         if(!savingsAccountGoal.isPresent()) {
             throw new RuntimeException("No savings account goal found for customer " + customer.getId());
         }

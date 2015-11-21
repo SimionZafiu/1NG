@@ -87,60 +87,64 @@ public class SingleAccountEngine {
 
     private void payInterestRatesAndEvaluateGoals(Customer customer, Calendar start, Calendar end) {
         for(Goal goal : customer.getGoals()) {
-            goal.getContractedProductList().parallelStream().filter(
-                    p -> p.getProduct().getType() == ProductType.SAVINGS || p.getProduct().getType() == ProductType.INVESTMENT)
-                    .forEach((contractedProduct) -> {
-                        apiClient.rebalance(contractedProduct, contractedProduct.getYield());
-                    });
+            if(goal.getContractedProductList() != null) {
+                goal.getContractedProductList().stream().filter(
+                        p -> p.getProduct().getType() == ProductType.SAVINGS || p.getProduct().getType() == ProductType.INVESTMENT)
+                        .forEach((contractedProduct) -> {
+                            apiClient.rebalance(contractedProduct, contractedProduct.getYield());
+                        });
 
-            goal.getContractedProductList().parallelStream().filter(
-                    p -> p.getProduct().getType() == ProductType.FIXED_INCOME && p.getCreationDate().after(Helper.getCurrentDate()))
-                    .forEach((contractedProduct) -> {
-                        apiClient.rebalance(contractedProduct, contractedProduct.getYield());
-                    });
+                goal.getContractedProductList().stream().filter(
+                        p -> p.getProduct().getType() == ProductType.FIXED_INCOME && p.getCreationDate().after(Helper.getCurrentDate()))
+                        .forEach((contractedProduct) -> {
+                            apiClient.rebalance(contractedProduct, contractedProduct.getYield());
+                        });
 
-            if(goal.getEndDate() != null && goal.getEndDate().equals(end)) {
-                double totalYield = goal.getContractedProductList().parallelStream().mapToDouble(ContractedProduct::getYield).sum();
-                apiClient.deposit(customer, totalYield);
-                apiClient.closeGoal(goal);
+                if(goal.getEndDate() != null && goal.getEndDate().equals(end)) {
+                    double totalYield = goal.getContractedProductList().stream().mapToDouble(ContractedProduct::getYield).sum();
+                    apiClient.deposit(customer, totalYield);
+                    apiClient.closeGoal(goal);
+                }
             }
         }
     }
 
     private void investAvailableAmount(Customer customer, Calendar start, Calendar end) {
-        List<Transaction> transactions = apiClient.getTransactions(customer.getId(), start, end) ;
-        double sumExpenses = transactions.stream().filter(t -> t.getType() == TransactionType.EXPENSE).mapToDouble(Transaction::getAmount).sum();
-        double sumIncome = transactions.stream().filter(t -> t.getType() == TransactionType.INCOME).mapToDouble(Transaction::getAmount).sum();
-        double availableAmount = sumIncome - sumExpenses;
+        List<Transaction> transactions = apiClient.getTransactions(customer.getId(), start, end);
+        if(transactions != null) {
+            double sumExpenses = transactions.stream().filter(t -> t.getType() == TransactionType.EXPENSE).mapToDouble(Transaction::getAmount).sum();
+            double sumIncome = transactions.stream().filter(t -> t.getType() == TransactionType.INCOME).mapToDouble(Transaction::getAmount).sum();
+            double availableAmount = sumIncome - sumExpenses;
 
-        // 1. Step of product allocation - savings
-        SavingsAccountAllocation savingsAllocation = investmentService.allocateToSavings(customer, sumIncome, sumExpenses);
-        double possibleSavingsAccountSurplus = savingsAllocation.getCurrentBalance() - savingsAllocation.getSecurityBuffer();
-        double savingsAccountSurplus = possibleSavingsAccountSurplus < 10 ? 0 : possibleSavingsAccountSurplus;
-        // 2. Step of product allocation - fixed income
-        availableAmount -= savingsAllocation.getInvestedAmount();
-        for(Goal goal : customer.getGoals()) {
-            if(goal.getType() != GoalType.SAVINGS && goal.getDuration() <= 3 * 12) {
-                if(availableAmount > 0) {
-                    GoalInvestmentAllocation goalInvestmentAllocation = investmentService
-                            .allocateToFixedIncomeProducts(customer, goal, availableAmount, savingsAccountSurplus, end);
-                    availableAmount -= goalInvestmentAllocation.getInvestedAmount();
-                } else {
-                    apiClient.updateGoalStatus(goal, GoalProgressStatus.RED);
+            // 1. Step of product allocation - savings
+            SavingsAccountAllocation savingsAllocation = investmentService.allocateToSavings(customer, sumIncome, sumExpenses);
+            double possibleSavingsAccountSurplus = savingsAllocation.getCurrentBalance() - savingsAllocation.getSecurityBuffer();
+            double savingsAccountSurplus = possibleSavingsAccountSurplus < 10 ? 0 : possibleSavingsAccountSurplus;
+            // 2. Step of product allocation - fixed income
+            availableAmount -= savingsAllocation.getInvestedAmount();
+            for (Goal goal : customer.getGoals()) {
+                if (goal.getGoalType() != GoalType.SAVINGS && goal.getDuration() <= 3 * 12) {
+                    if (availableAmount > 0) {
+                        GoalInvestmentAllocation goalInvestmentAllocation = investmentService
+                                .allocateToFixedIncomeProducts(customer, goal, availableAmount, savingsAccountSurplus, end);
+                        availableAmount -= goalInvestmentAllocation.getInvestedAmount();
+                    } else {
+                        apiClient.updateGoalStatus(goal, GoalProgressStatus.RED);
+                    }
                 }
             }
-        }
 
-        // 3. Step of product allocation - investment products
-        for(Goal goal : customer.getGoals()) {
-            if(goal.getType() != GoalType.SAVINGS && goal.getDuration() > 3 * 12) {
-                GoalInvestmentAllocation goalInvestmentAllocation = investmentService
-                        .allocateToInvestmentProducts(goal, availableAmount, end);
-                availableAmount -= goalInvestmentAllocation.getInvestedAmount();
+            // 3. Step of product allocation - investment products
+            for (Goal goal : customer.getGoals()) {
+                if (goal.getGoalType() != GoalType.SAVINGS && goal.getDuration() > 3 * 12) {
+                    GoalInvestmentAllocation goalInvestmentAllocation = investmentService
+                            .allocateToInvestmentProducts(goal, availableAmount, end);
+                    availableAmount -= goalInvestmentAllocation.getInvestedAmount();
+                }
             }
-        }
 
-        // 4. Nice to have - allocate any remaining to savings account
+            // 4. Nice to have - allocate any remaining to savings account
+        }
     }
 
     private void makeRESTRequest() {

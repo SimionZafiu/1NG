@@ -1,5 +1,6 @@
 package com.ing.ing1.http;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ing.ing1.dto.*;
 import com.ing.ing1.util.Helper;
 import org.apache.log4j.LogManager;
@@ -8,6 +9,8 @@ import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
@@ -41,36 +44,6 @@ public class INGApiClient {
         return restTemplate.getForObject(URL + ACCOUNTS + id, Account.class);
     }
 
-    // TODO implement REST call for getting products
-    public List<Product> getAllProducts() {
-        return null;
-    }
-
-    // TODO implement REST call for getting products
-    public List<Product> getInvestmentProducts() {
-        return null;
-    }
-
-    // TODO implement REST call for getting savings account goal
-    public Goal getSavingsAccountGoal(int customerId) {
-        return null;
-    }
-
-    // TODO implement REST call for getting savings product
-    public Product getSavingsAccountProduct() {
-        return null;
-    }
-
-    // TODO implement REST call for getting customer goals
-    public List<Goal> getCustomerGoals(int customerId) {
-        return null;
-    }
-
-    // TODO implement investment
-    public void investAmount(GoalInvestmentAllocation investment) {
-
-    }
-
     public List<Transaction> getTransactions(int customerId, Calendar start, Calendar end) {
         String startString = Helper.getDateString(start);
         String endString = Helper.getDateString(end);
@@ -83,7 +56,24 @@ public class INGApiClient {
 
     //TODO implement customer
     public List<Customer> getCustomers() {
-        return Arrays.asList(restTemplate.getForObject(CUSTOMERS, Customer[].class));
+//        List<Customer> customers = Arrays.asList(restTemplate.getForObject(CUSTOMERS, Customer[].class));
+       Customers customers = restTemplate.getForObject(CUSTOMERS, Customers.class);
+       return customers.getCustomers();
+    }
+
+    // TODO implement REST call for getting products
+    public List<Product> getAllProducts() {
+        return null;
+    }
+
+    // TODO implement REST call for getting products
+    public List<Product> getInvestmentProducts() {
+        return null;
+    }
+
+    // TODO implement investment
+    public void investAmount(GoalInvestmentAllocation investment) {
+
     }
 
     // TODO implement withdraw
@@ -104,6 +94,6 @@ public class INGApiClient {
     }
 
     // TODO update status
-    public void updateGoalStatus(Goal goal, GoalProgressStatus red) {
+    public void updateGoalStatus(Goal goal, GoalProgressStatus status) {
     }
 }

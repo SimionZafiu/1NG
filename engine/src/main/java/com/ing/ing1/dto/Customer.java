@@ -10,6 +10,7 @@ public class Customer {
     private String name;
     private String type;
     private double amount;
+    private List<Goal> goals;
 
     public String getName() {
         return name;
@@ -35,7 +36,6 @@ public class Customer {
         this.amount = amount;
     }
 
-    private List<Goal> goals;
 
     public List<Goal> getGoals() {
         return goals;

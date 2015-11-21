@@ -3,16 +3,20 @@ class Main_model extends CI_Model {
 
     function getDashboardData($customerId)
     {
-<<<<<<< Updated upstream
-        $query = $this->db->get('transaction_type', 10);
-        return $query->result();
+        //$query = $this->db->get('transaction_type', 10);
+        //return $query->result();
+        $profile = $this->getCustomer($customerId);
+        $data['profile'] = $profile[0];
+    	$data['goals'] = $this->getGoals($customerId);
+    	$data['investments'] = $this->getInvestments($customerId);
+    	$data['contracts'] = $this->getContracts($customerId);
+    	return $data;
     }
 
     function getCustomers()
     {
         $query = $this->db->get('customers', 10);
         return $query->result();
-=======
     	$sql = "SELECT c.id, c.amount FROM customers as c
     	LEFT JOIN goals as g ON g.customer_id = {$customerId}
     	LEFT JOIN transactions as t ON t.customer_id = {$customerId}
@@ -28,7 +32,6 @@ class Main_model extends CI_Model {
     	$data['investments'] = $this->getInvestments($customerId);
     	$data['contracts'] = $this->getContracts($customerId);
         return $data;
->>>>>>> Stashed changes
     }
 
     function getGoals($customerId)

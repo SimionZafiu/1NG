@@ -4,13 +4,9 @@ class Main extends CI_Controller {
 	
 	public function index()
 	{
-		
-		$this->load->view("dashboard_view");
-	}
-
-	public function test()
-	{
+		$customerId = 2;
 		$this->load->model("main_model");
+<<<<<<< Updated upstream
 		$transactionData = $this->main_model->getData();
 
 		echo "<br><pre>Transaction type: ";print_r($transactionData);
@@ -27,6 +23,11 @@ class Main extends CI_Controller {
 			echo "<br>No data in the customers table !";
 		}
 		
+=======
+		$getData = $this->main_model->getDashboardData($customerId);
+		echo "<br> ".json_encode($getData)."<br> ";
+		$this->load->view("dashboard_view",$getData);
+>>>>>>> Stashed changes
 	}
 }
 

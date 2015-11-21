@@ -10,7 +10,6 @@ import java.util.Calendar;
  */
 public class ContractedProduct {
     private int id;
-    private int customerId;
     private Product product;
     private Calendar creationDate;
     private double amount;
@@ -26,13 +25,6 @@ public class ContractedProduct {
         } catch (ParseException e) {
             throw new RuntimeException("Problem while trying to parse string date " + creationDate, e);
         }
-    }
-    public int getCustomerId() {
-        return customerId;
-    }
-
-    public void setCustomerId(int customerId) {
-        this.customerId = customerId;
     }
     public double getBalance() {
         return balance;

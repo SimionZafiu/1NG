@@ -12,18 +12,17 @@ import java.util.List;
 public class Goal {
     private int id;
     private GoalType type;
-    private int customerId;
     private double targetAmount;
     private Calendar startDate;
     private Calendar endDate;
-    private List<ContractedProduct> contractedProductList;
+    private List<ContractedProduct> products;
 
-    public List<ContractedProduct> getContractedProductList() {
-        return contractedProductList;
+    public List<ContractedProduct> getProducts() {
+        return products;
     }
 
-    public void setContractedProductList(List<ContractedProduct> contractedProductList) {
-        this.contractedProductList = contractedProductList;
+    public void setProducts(List<ContractedProduct> products) {
+        this.products = products;
     }
 
     public int getId() {
@@ -40,14 +39,6 @@ public class Goal {
 
     public void setGoalType(String type) {
         this.type = GoalType.valueOf(type.toUpperCase());
-    }
-
-    public int getCustomerId() {
-        return customerId;
-    }
-
-    public void setCustomerId(int customerId) {
-        this.customerId = customerId;
     }
 
     public double getTargetAmount() {
@@ -87,9 +78,9 @@ public class Goal {
     }
 
     public double getCurrentTotalYield() {
-        return contractedProductList.stream().mapToDouble(ContractedProduct::getYield).sum();
+        return products.stream().mapToDouble(ContractedProduct::getYield).sum();
 //        double sum = 0;
-//        for(ContractedProduct contractedProduct : contractedProductList) {
+//        for(ContractedProduct contractedProduct : products) {
 //            sum += contractedProduct.getYield();
 //        }
 //        return sum;

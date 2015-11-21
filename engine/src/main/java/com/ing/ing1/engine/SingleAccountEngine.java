@@ -87,21 +87,21 @@ public class SingleAccountEngine {
 
     private void payInterestRatesAndEvaluateGoals(Customer customer, Calendar start, Calendar end) {
         for(Goal goal : customer.getGoals()) {
-            if(goal.getContractedProductList() != null) {
-                goal.getContractedProductList().stream().filter(
+            if(goal.getProducts() != null) {
+                goal.getProducts().stream().filter(
                         p -> p.getProduct().getType() == ProductType.SAVINGS || p.getProduct().getType() == ProductType.INVESTMENT)
                         .forEach((contractedProduct) -> {
                             apiClient.rebalance(contractedProduct, contractedProduct.getYield());
                         });
 
-                goal.getContractedProductList().stream().filter(
+                goal.getProducts().stream().filter(
                         p -> p.getProduct().getType() == ProductType.FIXED_INCOME && p.getCreationDate().after(Helper.getCurrentDate()))
                         .forEach((contractedProduct) -> {
                             apiClient.rebalance(contractedProduct, contractedProduct.getYield());
                         });
 
                 if(goal.getEndDate() != null && goal.getEndDate().equals(end)) {
-                    double totalYield = goal.getContractedProductList().stream().mapToDouble(ContractedProduct::getYield).sum();
+                    double totalYield = goal.getProducts().stream().mapToDouble(ContractedProduct::getYield).sum();
                     apiClient.deposit(customer, totalYield);
                     apiClient.closeGoal(goal);
                 }

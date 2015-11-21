@@ -53,7 +53,7 @@ public class InvestmentService {
         if(!savingsAccountGoal.isPresent()) {
             throw new RuntimeException("No savings account goal found for customer " + customer.getId());
         }
-        List<ContractedProduct> list = savingsAccountGoal.get().getContractedProductList();
+        List<ContractedProduct> list = savingsAccountGoal.get().getProducts();
         if(CollectionUtils.isEmpty(list)) {
             throw new RuntimeException("No savings account found in the savings account goal of customer " + customer.getId());
         }
@@ -117,20 +117,20 @@ public class InvestmentService {
         int goalRemainingMonths = goalDurationInMonths - goalActiveMonths;
         List<Product> products = apiClient.getInvestmentProducts();
         Optional<Product> product;
-        boolean alreadyContractedProduct = goal.getContractedProductList() != null && goal.getContractedProductList().get(0) != null;
+        boolean alreadyContractedProduct = goal.getProducts() != null && goal.getProducts().get(0) != null;
         if(goalActiveMonths < 0.35 * goalDurationInMonths) {
             product = products.stream().filter(p -> p.getSubType() == ProductType.ProductSubType.HIGH_RISK).findFirst();
         } else if(goalActiveMonths >= 0.35 * goalDurationInMonths && goalActiveMonths < 0.8 * goalDurationInMonths) {
             product = products.stream().filter(p -> p.getSubType() == ProductType.ProductSubType.MEDIUM_RISK).findFirst();
             if(alreadyContractedProduct) {
-                availableAmount += goal.getContractedProductList().get(0).getBalance();
-                apiClient.withdraw(goal.getContractedProductList().get(0), goal.getContractedProductList().get(0).getBalance());
+                availableAmount += goal.getProducts().get(0).getBalance();
+                apiClient.withdraw(goal.getProducts().get(0), goal.getProducts().get(0).getBalance());
             }
         } else {
             product = products.stream().filter(p -> p.getSubType() == ProductType.ProductSubType.LOW_RISK).findFirst();
             if(alreadyContractedProduct) {
-                availableAmount += goal.getContractedProductList().get(0).getBalance();
-                apiClient.withdraw(goal.getContractedProductList().get(0), goal.getContractedProductList().get(0).getBalance());
+                availableAmount += goal.getProducts().get(0).getBalance();
+                apiClient.withdraw(goal.getProducts().get(0), goal.getProducts().get(0).getBalance());
             }
         }
 
@@ -139,7 +139,7 @@ public class InvestmentService {
             goalInvestmentAllocation.setGoalId(goal.getId());
             goalInvestmentAllocation.setProductId(product.get().getId());
             double monthlyYieldTarget = goal.getTargetAmount() / goalRemainingMonths;
-            double currentInvestedAmount = alreadyContractedProduct ? goal.getContractedProductList().get(0).getBalance() : 0;
+            double currentInvestedAmount = alreadyContractedProduct ? goal.getProducts().get(0).getBalance() : 0;
             double idealInvestedAmount = goalActiveMonths * monthlyYieldTarget;
             goalInvestmentAllocation.setOnTrack(currentInvestedAmount >= 0.95 * idealInvestedAmount
                     ? GoalProgressStatus.GREEN.name() :
